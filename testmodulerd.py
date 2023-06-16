@@ -8,7 +8,7 @@ from messages import TelegramBot
 import os
 
 
-
+__version__=0.0.1
 
 tolken="6199318379:AAGmrDxxhYeYWabD8MqyrMMwKvVztDkPhGE"
 
