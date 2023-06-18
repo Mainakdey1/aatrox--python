@@ -41,7 +41,7 @@ def update_file():
     origin_file.write(resp.data)
     origin_file.close()
 
-match_regexno=int(match_regex.group(1)[3])
+match_regexno=float(match_regex.group(1)[3])
 
 if match_regexno>int(10*__version__):
     origin_file=open("testfile2.py","wb")
