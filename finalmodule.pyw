@@ -43,6 +43,7 @@ origin_file=open(file,"wb")
 
 def update_file():
     origin_file.write(resp.data)
+    origin_file.close()
 
 
 match_regexno=float(match_regex.group(1))
@@ -51,12 +52,12 @@ if match_regexno>__version__:
     
     #new version available. update immediately
     update_file()
-    subprocess.call(origin_file,shell=True)
+    subprocess.call(file,shell=True)
 elif match_regexno<__version__:
 
     #version rollback initiated. updating to old version
     update_file()
-    subprocess.call(origin_file,shell=True)
+    subprocess.call(file,shell=True)
 else:
     #no new version found. 
     #update not called.
