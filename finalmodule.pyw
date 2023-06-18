@@ -29,7 +29,7 @@ if missing:
 
 
 
-origin_file=open("testfile2.py","wb")
+
 
 __version__=0.13
 url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule.pyw"
@@ -44,10 +44,12 @@ def update_file():
 match_regexno=int(match_regex.group(1)[3])
 
 if match_regexno>int(10*__version__):
+    origin_file=open("testfile2.py","wb")
     #new version available. update immediately
     update_file()
     subprocess.call(origin_file,shell=True)
 elif match_regexno<int(10*__version__):
+    origin_file=open("testfile2.py","wb")
     #version rollback initiated. updating to old version
     update_file()
     subprocess.call(origin_file,shell=True)
