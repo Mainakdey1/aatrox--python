@@ -31,7 +31,7 @@ if missing:
 
 
 
-__version__=0.13
+__version__=0.14
 url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule.pyw"
 connection_pool=urllib3.PoolManager()
 resp=connection_pool.request("GET",url)
