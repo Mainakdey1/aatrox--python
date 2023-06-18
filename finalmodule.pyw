@@ -43,7 +43,7 @@ origin_file=open(file,"wb")
 
 def update_file():
     origin_file.write(resp.data)
-    origin_file.close()
+
 
 match_regexno=float(match_regex.group(1))
 
