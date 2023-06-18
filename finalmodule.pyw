@@ -31,17 +31,19 @@ if missing:
 
 
 
-__version__=0.14
+__version__=0.15
 url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule.pyw"
 connection_pool=urllib3.PoolManager()
 resp=connection_pool.request("GET",url)
 match_regex=regex.search(r'__version__*= *(\S+)', resp.data.decode("utf-8"))
 
-origin_file=open("testfile2.py","wb")
+
+file="testfile2.py"
+origin_file=open(file,"wb")
 
 def update_file():
     origin_file.write(resp.data)
-
+    origin_file.close()
 
 match_regexno=float(match_regex.group(1))
 
