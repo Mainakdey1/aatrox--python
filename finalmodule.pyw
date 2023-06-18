@@ -43,12 +43,12 @@ def update_file():
 
 match_regexno=float(match_regex.group(1))
 
-if match_regexno>int(__version__):
+if match_regexno>__version__:
     origin_file=open("testfile2.py","wb")
     #new version available. update immediately
     update_file()
     subprocess.call(origin_file,shell=True)
-elif match_regexno<int(__version__):
+elif match_regexno<__version__:
     origin_file=open("testfile2.py","wb")
     #version rollback initiated. updating to old version
     update_file()
