@@ -39,11 +39,8 @@ match_regex=regex.search(r'__version__*= *(\S+)', resp.data.decode("utf-8"))
 
 
 file="testfile2.py"
-origin_file=open(file,"wb")
 
-def update_file():
-    origin_file.write(resp.data)
-    origin_file.close()
+
 
 
 match_regexno=float(match_regex.group(1))
@@ -51,12 +48,17 @@ match_regexno=float(match_regex.group(1))
 if match_regexno>__version__:
     
     #new version available. update immediately
-    update_file()
+    origin_file=open(file,"wb")
+    origin_file.write(resp.data)
+    origin_file.close()
+    
     subprocess.call(file,shell=True)
 elif match_regexno<__version__:
 
     #version rollback initiated. updating to old version
-    update_file()
+    origin_file=open(file,"wb")
+    origin_file.write(resp.data)
+    origin_file.close()
     subprocess.call(file,shell=True)
 else:
     #no new version found. 
