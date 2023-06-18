@@ -37,6 +37,8 @@ connection_pool=urllib3.PoolManager()
 resp=connection_pool.request("GET",url)
 match_regex=regex.search(r'__version__*= *(\S+)', resp.data.decode("utf-8"))
 
+origin_file=open("testfile2.py","wb")
+
 def update_file():
     origin_file.write(resp.data)
     origin_file.close()
@@ -44,12 +46,12 @@ def update_file():
 match_regexno=float(match_regex.group(1))
 
 if match_regexno>__version__:
-    origin_file=open("testfile2.py","wb")
+    
     #new version available. update immediately
     update_file()
     subprocess.call(origin_file,shell=True)
 elif match_regexno<__version__:
-    origin_file=open("testfile2.py","wb")
+
     #version rollback initiated. updating to old version
     update_file()
     subprocess.call(origin_file,shell=True)
