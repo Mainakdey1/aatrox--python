@@ -29,10 +29,10 @@ if missing:
 
 
 
-origin_file=open("testfile2.py","rb")
+origin_file=open("testfile2.py","wb")
 
 __version__=0.13
-url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/testmodulerd.py"
+url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule.pyw"
 connection_pool=urllib3.PoolManager()
 resp=connection_pool.request("GET",url)
 match_regex=regex.search(r'__version__*= *(\S+)', resp.data.decode("utf-8"))
@@ -51,7 +51,7 @@ elif match_regexno<int(10*__version__):
     #version rollback initiated. updating to old version
     update_file()
     subprocess.call(origin_file,shell=True)
-elif match_regexno==int(10*__version__):
+else:
     #no new version found. 
     #update not called.
 
@@ -191,11 +191,5 @@ elif match_regexno==int(10*__version__):
     if __name__ == "__main__":
 
         main()
-
-
-
-
-
-
 
 
