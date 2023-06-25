@@ -18,7 +18,18 @@ from subprocess import call
 from telegram import ForceReply, Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
-#Did it work?
+__version__=0.17
+
+
+file="testfile2.py"    
+#Token for the telegram bot.
+token="6199318379:AAGmrDxxhYeYWabD8MqyrMMwKvVztDkPhGE"
+#url for online update source
+url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule.pyw"
+
+
+
+
 required={"python-telegram-bot","psutil","datetime","messages","win10toast"}
 installed={pkg.key for pkg in pkg_resources.working_set}
 missing=required-installed
@@ -31,14 +42,14 @@ if missing:
 
 
 
-__version__=0.16
-url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule.pyw"
+
+
 connection_pool=urllib3.PoolManager()
 resp=connection_pool.request("GET",url)
 match_regex=regex.search(r'__version__*= *(\S+)', resp.data.decode("utf-8"))
 
 
-file="testfile2.py"
+
 
 
 
@@ -98,8 +109,7 @@ else:
 
 
 
-    #Token for the telegram bot.
-    token="6199318379:AAGmrDxxhYeYWabD8MqyrMMwKvVztDkPhGE"
+
 
 
 
