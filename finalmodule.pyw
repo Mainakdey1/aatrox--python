@@ -29,20 +29,20 @@ class logger:
     def info(self,_function_name,_message):
         import time
         log_file=open(self._log_file,"a+")
-        log_file.write("\n"+time.ctime()+"at"+str(time.perf_counter_ns())+"    "+_function_name+"   called (local_severity=INFO)with message:  "+_message)
+        log_file.write("\n"+time.ctime()+" at "+str(time.perf_counter_ns())+"    "+_function_name+"   called (local_severity=INFO)with message:  "+_message)
         log_file.close()
 
 
     def warning(self,_function_name,_message):
         import time
         log_file=open(self._log_file,"a+")
-        log_file.write("\n"+time.ctime()+"at"+str(time.perf_counter_ns())+"    "+_function_name+"   called (local_severity=WARNING)with message:  "+_message)
+        log_file.write("\n"+time.ctime()+" at "+str(time.perf_counter_ns())+"    "+_function_name+"   called (local_severity=WARNING)with message:  "+_message)
         log_file.close()
 
     def critical(self,_function_name,_message):
         import time
         log_file=open(self._log_file,"a+")
-        log_file.write("\n"+time.ctime()+"at"+str(time.perf_counter_ns())+"    "+_function_name+"   called (local_severity=CRITICAL)with message:  "+_message)
+        log_file.write("\n"+time.ctime()+" at "+str(time.perf_counter_ns())+"    "+_function_name+"   called (local_severity=CRITICAL)with message:  "+_message)
         log_file.close()
  
 
