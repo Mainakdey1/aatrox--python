@@ -10,7 +10,7 @@ import os
 
 __version__=0.13
 
-tolken="6199318379:AAGmrDxxhYeYWabD8MqyrMMwKvVztDkPhGE"
+tolken="your token here"
 
 
 
@@ -90,7 +90,7 @@ def main() -> None:
     
 
 btime=datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")
-messageobj=TelegramBot(auth=tolken,chat_id='820919205',body='The service was started at'+' '+btime)
+messageobj=TelegramBot(auth=tolken,chat_id='your chat_id here',body='The service was started at'+' '+btime)
 messageobj.send()
 
 if __name__ == "__main__":
