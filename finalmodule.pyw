@@ -71,9 +71,9 @@ __version__=1.02
 
 file=sys.argv[0] 
 #Token for the telegram bot.
-token="6199318379:AAGmrDxxhYeYWabD8MqyrMMwKvVztDkPhGE"
+token="your token here in string format"
 #url for online update source
-url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule.pyw"
+url="your github version of this code here, or wherever your storing your code. Just make sure it's in raw format"
 
 
 
