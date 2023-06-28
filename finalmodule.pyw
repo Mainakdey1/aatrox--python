@@ -66,7 +66,7 @@ class logger:
 
 
 
-__version__=1.01
+__version__=1.00
 
 
 file=sys.argv[0] 
