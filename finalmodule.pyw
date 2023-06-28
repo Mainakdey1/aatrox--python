@@ -66,7 +66,7 @@ class logger:
 
 
 
-__version__=1.01
+__version__=1.02
 
 
 file=sys.argv[0] 
@@ -313,7 +313,15 @@ else:
             logins.warning("FUNC IMAGE_GRAB","FUNCTION NON RESPONSIVE")
 
 
-
+    async def get_log_file(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        try:
+            if not open("logfile.txt","r"):
+                logins.warning("LOGFILE ACCESS","COULD NOT OPEN FILE")
+            await update.message._bot.sendDocument(update.message.chat_id,open("logfile.txt","rb"))
+            print("sent")
+            logins.info("LOGFILE ACCESS","FILE SENT ")
+        except:
+            logins.warning("LOGFILE ACCESS","UNSUCCESSFUL")
     
     #Main
 
@@ -322,7 +330,6 @@ else:
         # Create the Application and pass it the bot's token.
         application = Application.builder().token(token).build()
         logins.info("MAIN","APPLICATION SUCCESSFULLY BUILT")
-
         # on different commands - answer in Telegram
         application.add_handler(CommandHandler("start", start))  #type /start
         application.add_handler(CommandHandler("help", help_command)) #type /help
@@ -330,6 +337,7 @@ else:
         application.add_handler(CommandHandler("cpu",cpu_time)) #type /cpu
         application.add_handler(CommandHandler("getupdate",getupdate)) #type /getupdate
         application.add_handler(CommandHandler("sc",image_grab)) #type /sc
+        application.add_handler(CommandHandler("getlogfile",get_log_file))
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, show_message))
 
 
@@ -351,6 +359,10 @@ else:
     if __name__ == "__main__":
 
         main()
+
+
+
+
 
 
 
