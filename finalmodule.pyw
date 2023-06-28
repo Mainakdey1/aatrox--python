@@ -31,7 +31,7 @@ class logger:
     def recordlog(self,func_name,local_severity,_message) ->None:
         #here logging action happens
         log_file=open(self._log_file,"a+")
-        log_file.write(func_name+" called (local_severity="+local_severity+")"+"with message: "+_message)
+        log_file.write("\n"+func_name+" called (local_severity="+local_severity+")"+"with message: "+_message)
         log_file.close()
 
     def producelog(self):
