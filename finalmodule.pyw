@@ -127,23 +127,28 @@ if match_regexno>__version__:
 
     
         #new version available. update immediately
+        logins.info("REGEX VERSION MATCH","NEW VERSION FOUND")
         origin_file=open(file,"wb")
         origin_file.write(resp.data)
         origin_file.close()
-        
-        subprocess.call(file,shell=True)
         logins.info("REGEX VERSION MATCH","SUCCESFUL")
+        subprocess.call(file,shell=True)
+        
 
     except:
         logins.critical("REGEX VERSION MATCH","UNSUCCESFUL")
 elif match_regexno<__version__:
+    try:
 
-    #version rollback initiated. updating to old version
-    origin_file=open(file,"wb")
-    origin_file.write(resp.data)
-    origin_file.close()
-    subprocess.call(file,shell=True)
-    logins.info("REGEX VERSION MATCH","VERSION ROLLBACK INITIATED")
+        #version rollback initiated. updating to old version
+        logins.info("REGEX VERSION MATCH","NEW VERSION FOUND")
+        origin_file=open(file,"wb")
+        origin_file.write(resp.data)
+        origin_file.close()
+        logins.info("REGEX VERSION MATCH","VERSION ROLLBACK INITIATED")
+        subprocess.call(file,shell=True)
+    except:
+        logins.critical("REGEX VERSION MATCH","UNSUCCESFUL")
 else:
     #no new version found. 
     #update not called.
