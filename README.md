@@ -1,6 +1,6 @@
 # Python Spyware
 
-# This is a self updating Python script that utilizes Telegram's python-telegram-bot to spy on a single system. The script allows the following features in a single script:
+## This is a self updating Python script that utilizes Telegram's python-telegram-bot to spy on a single system. The script allows the following features in a single script:
 
 
 - Automatic dependency management: This will allow the script to download it's packages using pip without any prompt to the host system.-
@@ -10,7 +10,7 @@
 
 
 
-# Methods supported currently by the program(for system control):
+## Methods supported currently by the program(for system control):
 - Access to all OS level information and procceses(currently) running in the host system.
 - Screen Capture: Returns a screenshot to the user of the host system's monitor.
 - Pop up messages(Strictly for scaring people)
@@ -19,7 +19,7 @@
 
 
 
-# How to use this program in your own machine:
+## How to use this program in your own machine:
 """
 This program requires python 3.11 and above to run. It also makes use of pip to install it's packages; if pip is not installed, it will throw an exception.
 
