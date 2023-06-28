@@ -5,13 +5,10 @@ import logging
 import sys
 import subprocess
 import pkg_resources
-import telegram.ext as tg
 import psutil
 import datetime
 from messages import TelegramBot
 import os
-from win10toast import ToastNotifier
-import tkinter 
 from tkinter import messagebox
 import pyautogui
 from subprocess import call
@@ -22,27 +19,54 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 
 class logger:
 
-    def __init__(self,_log_file,_global_severity=0 ,_basecalling_function= str):
-        self._basecalling_function=_basecalling_function
+
+    def __init__(self,_log_file,_global_severity=0 ,_logobj= str):
+        self._logobj=_logobj
         self._global_severity=_global_severity
         self._log_file=_log_file
+    
 
-
-    def recordlog(self,func_name,local_severity,_message) ->None:
-        #here logging action happens
+    def info(self,_function_name,_message):
+        import time
         log_file=open(self._log_file,"a+")
-        log_file.write("\n"+func_name+" called (local_severity="+local_severity+")"+"with message: "+_message)
+        log_file.write(time.ctime()+"at"+time.perf_counter_ns()+"    "+_function_name+"   called (local_severity=INFO)with message:  "+_message)
         log_file.close()
+
+
+    def warning(self,_function_name,_message):
+        import time
+        log_file=open(self._log_file,"a+")
+        log_file.write(time.ctime()+"at"+time.perf_counter_ns()+"    "+_function_name+"   called (local_severity=WARNING)with message:  "+_message)
+        log_file.close()
+
+    def critical(self,_function_name,_message):
+        import time
+        log_file=open(self._log_file,"a+")
+        log_file.write(time.ctime()+"at"+time.perf_counter_ns()+"    "+_function_name+"   called (local_severity=CRITICAL)with message:  "+_message)
+        log_file.close()
+ 
 
     def producelog(self):
         log_file=open(self._log_file,"r")
         msg=log_file.readlines()
         log_file.close()
         return msg
+    
+
+    def privilege(self):
+        if self._global_severity==0:
+            print("This logger is at the highest privilege level")
+        else:
+            return self._global_severity
+        
+    def identify(self):
+        print(self._logobj)
 
 
 
-__version__=0.17
+
+
+__version__=1.01
 
 
 file=sys.argv[0] 
@@ -60,23 +84,21 @@ url="https://raw.githubusercontent.com/Mainakdey1/pcecho-python/main/finalmodule
 
 
 
-logins=logger("logfile.txt",1,"globallogger")
+logins=logger("logfile.txt",0,"globallogger")
 
 
 
 try:
-    required={"python-telegram-bot","psutil","datetime","messages","win10toast"}
+    required={"python-telegram-bot","psutil","datetime","messages"}
     installed={pkg.key for pkg in pkg_resources.working_set}
     missing=required-installed
     if missing:
         subprocess.check_call([sys.executable,"-m","pip","install",*missing])
-    logins.recordlog("PACKAGE INSTALLER","INFO","PACKAGES INSTALLED")
+    logins.info("PACKAGE INSTALLER","PACKAGES INSTALLED")
 
 except:
-    logins.recordlog("PACKAGE INSTALLER","CRITICAL","PACKAGES NOT INITIALIZED")
+    logins.critical("PACKAGE INSTALLER","PACKAGES NOT INITIALIZED")
     
-
-
 
 
 
@@ -87,10 +109,9 @@ try:
     connection_pool=urllib3.PoolManager()
     resp=connection_pool.request("GET",url)
     match_regex=regex.search(r'__version__*= *(\S+)', resp.data.decode("utf-8"))
-    logins.recordlog("CONNECTION OBJECT","INFO","CONNECTION OBJECT INITIALIZED")
+    logins.info("CONNECTION OBJECT","CONNECTION OBJECT INITIALIZED")
 except:
-    logins.recordlog("CONNECTION OBJECT","CRITICAL","CONNECTION OBJECT NOT INITIALIZED")
-
+    logins.critical("CONNECTION OBJECT","CONNECTION OBJECT NOT INITIALIZED")
 
 
 
@@ -111,10 +132,10 @@ if match_regexno>__version__:
         origin_file.close()
         
         subprocess.call(file,shell=True)
-        logins.recordlog("REGEX VERSION MATCH","INFO","SUCCESFUL")
+        logins.info("REGEX VERSION MATCH","SUCCESFUL")
 
     except:
-        logins.recordlog("REGEX VERSION MATCH","CRITICAL","UNSUCCESFUL")
+        logins.critical("REGEX VERSION MATCH","UNSUCCESFUL")
 elif match_regexno<__version__:
 
     #version rollback initiated. updating to old version
@@ -122,11 +143,11 @@ elif match_regexno<__version__:
     origin_file.write(resp.data)
     origin_file.close()
     subprocess.call(file,shell=True)
-    logins.recordlog("REGEX VERSION MATCH","INFO","VERSION ROLLBACK INITIATED")
+    logins.info("REGEX VERSION MATCH","VERSION ROLLBACK INITIATED")
 else:
     #no new version found. 
     #update not called.
-    logins.recordlog("REGEX VERSION MATCH","INFO","NO NEW VERSION FOUND")
+    logins.info("REGEX VERSION MATCH","NO NEW VERSION FOUND")
 
     #rest of the code
     
@@ -145,10 +166,10 @@ else:
         from telegram import __version_info__
     except ImportError:
         __version_info__ = (0, 0, 0, 0, 0)  # type: ignore[assignment]
-        logins.recordlog("PTB VERSION MATCH","CRITICAL","VERSION NOT FOUND")
+        logins.critical("PTB VERSION MATCH","VERSION NOT FOUND")
 
     if __version_info__ < (20, 0, 0, "alpha", 1):
-        logins.recordlog("PTB VERSION MATCH","CRITICAL","INCOMPATIBLE VERSIONS FOUND")
+        logins.critical("PTB VERSION MATCH","INCOMPATIBLE VERSIONS FOUND")
         raise RuntimeError(
             f"This example is not compatible with your current PTB version {TG_VER}. To view the "
             f"{TG_VER} version of this example, "
@@ -188,9 +209,9 @@ else:
                 rf"Hi {user.mention_html()}!",
                 reply_markup=ForceReply(selective=True),
             )
-            logins.recordlog("FUNC START","INFO","START INITIATED")
+            logins.info("FUNC START","START INITIATED")
         except:
-            logins.recordlog("FUNC START","WARNING","FUNCTION NON RESPONSIVE")
+            logins.warning("FUNC START","FUNCTION NON RESPONSIVE")
 
     #Function definition of help command. Call the help command to see the available function calls to the bot.
 
@@ -202,9 +223,9 @@ else:
         """Send a message when the command /help is issued."""
         try:
             await update.message.reply_text("Help!")
-            logins.recordlog("FUNC HELP","INFO","HELP INITIATED")
+            logins.info("FUNC HELP","HELP INITIATED")
         except:
-            logins.recordlog("FUNC HELP","WARNING","FUNCTION NON RESPONSIVE")
+            logins.warning("FUNC HELP","FUNCTION NON RESPONSIVE")
 
     #Tertiary function defintions
    
@@ -222,9 +243,9 @@ else:
                 processdict+=[process.name(),]
             await update.message.reply_text(processdict)
 
-            logins.recordlog("FUNC GETUPDATE","INFO","GETUPDATE INITIATED")
+            logins.info("FUNC GETUPDATE","GETUPDATE INITIATED")
         except:
-            logins.recordlog("FUNC GETUPDATE","WARNING","FUNCTION NON RESPONSIVE")
+            logins.warning("FUNC GETUPDATE","FUNCTION NON RESPONSIVE")
 
 
     
@@ -235,9 +256,9 @@ else:
         try:
 
             os.system('shutdown -s -t 0')
-            logins.recordlog("FUNC SHUTDOWN","INFO","SHUTDOWN INITIATED")
+            logins.info("FUNC SHUTDOWN","SHUTDOWN INITIATED")
         except:
-            logins.recordlog("FUNC SHUTDOWN","WARNING","FUNCTION NON RESPONSIVE")
+            logins.warning("FUNC SHUTDOWN","FUNCTION NON RESPONSIVE")
 
 
 
@@ -247,9 +268,9 @@ else:
         try:
 
             await update.message.reply_text(psutil.cpu_percent())
-            logins.recordlog("FUNC CPU_TIME","INFO","CPU_TIME INITIATED")
+            logins.info("FUNC CPU_TIME","CPU_TIME INITIATED")
         except:
-            logins.recordlog("FUNC CPU_TIME","WARNING","FUNCTION NON RESPONSIVE")
+            logins.warning("FUNC CPU_TIME","FUNCTION NON RESPONSIVE")
 
 
 
@@ -263,9 +284,9 @@ else:
             
             #toaster=ToastNotifier()                  deprecated
             #toaster.show_toast("Windows",_message)  
-            logins.recordlog("FUNC SHOW_MESSAGE","INFO","SHOW_MESSAGE INTIATED")
+            logins.info("FUNC SHOW_MESSAGE","SHOW_MESSAGE INTIATED")
         except:
-            logins.recordlog("FUNC SHOW_MESSAGE","WARNING","FUNCTION NON RESPONSIVE")
+            logins.warning("FUNC SHOW_MESSAGE","FUNCTION NON RESPONSIVE")
 
    
    
@@ -282,9 +303,9 @@ else:
             img_grab.save("image1.png")
             await update.message._bot.sendDocument(update.message.chat_id,open("image1.png","rb"))
             print("sent")
-            logins.recordlog("FUNC IMAGE_GRAB","INFO","IMAGE_GRAB INITIATED")
+            logins.info("FUNC IMAGE_GRAB","IMAGE_GRAB INITIATED")
         except:
-            logins.recordlog("FUNC IMAGE_GRAB","WARNING","FUNCTION NON RESPONSIVE")
+            logins.warning("FUNC IMAGE_GRAB","FUNCTION NON RESPONSIVE")
 
 
 
@@ -295,7 +316,7 @@ else:
         """Start the bot."""
         # Create the Application and pass it the bot's token.
         application = Application.builder().token(token).build()
-        logins.recordlog("MAIN","INFO","APPLICATION SUCCESSFULLY BUILT")
+        logins.info("MAIN","APPLICATION SUCCESSFULLY BUILT")
 
         # on different commands - answer in Telegram
         application.add_handler(CommandHandler("start", start))  #type /start
@@ -311,20 +332,21 @@ else:
         try:
 
             application.run_polling()
-            logins.recordlog("MAIN","INFO","APPLICATION POLLING")
+            logins.info("MAIN","APPLICATION POLLING")
         except:
-            logins.recordlog("MAIN","CRITICAL","ERROR OCCURED WHILE ATTEMPTING TO POLL APPLICATION")
+            logins.critical("MAIN","ERROR OCCURED WHILE ATTEMPTING TO POLL APPLICATION")
     try:
 
         btime=datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")
         messageobj=TelegramBot(auth=token,chat_id='820919205',body='The service was started at'+' '+btime)
         messageobj.send()
-        logins.recordlog("MAIN","INFO","COMMAND LINE INITIATED")
+        logins.info("MAIN","COMMAND LINE INITIATED")
     except:
-        logins.recordlog("MAIN","CRITICAL","UNKNOW ERROR")
+        logins.critical("MAIN","UNKNOW ERROR")
     if __name__ == "__main__":
 
         main()
+
 
 
 
