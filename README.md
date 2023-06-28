@@ -2,9 +2,12 @@
 
 ## This is a self updating Python script that utilizes Telegram's python-telegram-bot to spy on a single system. The script allows the following features in a single script:
 
+Thing about a python spyware is that, since python is not a part of the packages that come with Windows as part of it's build, a spyware made with python makes not a lot of sense compared to it's C/C++ counter parts. But what's in trying anyway?
 
-- Automatic dependency management: This will allow the script to download it's packages using pip without any prompt to the host system.-
-- A single script self updating system: Upon startup, the script runs and checks for updates on it's Github page for updates. If it finds one, it updates itself.\n
+
+
+- Automatic dependency management: This will allow the script to download it's packages using pip without any prompt to the host system.
+- A single script self updating system: Upon startup, the script runs and checks for updates on it's Github page for updates. If it finds one, it updates itself.
 - System rights elevation(under work): The script can access the terminal under Administrative rights, by performing a UAC elevation, under Python organization's name which gives it access to the entire system.
 - A custom logging class, for program specific logging(also I could'nt make sense of python's loggingmodule. yes im dumdum) and a log file retriever method, for remote maintenance.
 
@@ -33,5 +36,9 @@ That's it(really it). You can now use this bot to send commands to your computer
 You will require some intuition to make the script run but I believe in you.
 
 Small story: I really made this program to prank my unsuspecting friends in my college department. I kept adding features thinking of various ways to do so
-and in the
+and in the end it became this instead.
 
+Made with a healthy amount of hate towards my school.
+
+### Please do not use this program for malicious purposes. However clever you think you are, there's always a cop that's smarter. 
+### With crime thy shall not get away, for Jail is never too far away.
