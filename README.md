@@ -6,7 +6,7 @@ Thing about a python spyware is that, since python is not a part of the packages
 
 
 
-- Automatic dependency management: This will allow the script to download it's packages using pip without any prompt to the host system.
+- Automatic dependency management: This will allow the script to download it's packages using pip without any prompt to the host system. The caveat here is that pip has to be already installed. The target system for my spyware came with anaconda python, which bundles pip as part of it's package.
 - A single script self updating system: Upon startup, the script runs and checks for updates on it's Github page for updates. If it finds one, it updates itself.
 - System rights elevation(under work): The script can access the terminal under Administrative rights, by performing a UAC elevation, under Python organization's name which gives it access to the entire system.
 - A custom logging class, for program specific logging(also I could'nt make sense of python's loggingmodule. yes im dumdum) and a log file retriever method, for remote maintenance.
