@@ -24,7 +24,7 @@ Thing about a python spyware is that, since python is not a part of the packages
 
 
 ## How to use this program in your own machine:
-"""
+
 This program requires python 3.11 and above to run. It also makes use of pip to install it's packages; if pip is not installed, it will throw an exception.
 
 Download this script in your system and (ideally) place it in your Python folder and you're done!
