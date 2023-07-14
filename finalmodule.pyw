@@ -32,6 +32,13 @@ delay="any delay value that will not crash the system"
 
 
 
+#version 
+__version__=1.09
+
+
+
+
+#scanner class for scanning and keeping track of currently running programs.
 class process_scanner:
     
 
@@ -61,6 +68,10 @@ class process_scanner:
         return self._hidev,__name__
  
 
+#Logger class for logging events. Events have 3 severity:info, warning and critical
+#info: call with this to record events that are part of the normal functioning of the program
+#warning: call with this severity to record events that are crucial but will not break the funtioning of the program.
+#critical: call with this severity to record events that are critical to the functioning of the program.
 
 class logger:
 
@@ -90,29 +101,23 @@ class logger:
         log_file.write("\n"+time.ctime()+" at "+str(time.perf_counter_ns())+"    "+_function_name+"   called (local_severity=CRITICAL)with message:  "+_message)
         log_file.close()
  
-
+#call this method to produce the log file
     def producelog(self):
         log_file=open(self._log_file,"r")
         msg=log_file.readlines()
         log_file.close()
         return msg
     
-
+#call this method to find the privilege level of the current logging instance.
     def privilege(self):
         if self._global_severity==0:
             print("This logger is at the highest privilege level")
         else:
             return self._global_severity
         
+#call this method to identify the logging instance, if there are several instances initiated.
     def identify(self):
         print(self._logobj)
-
-
-
-
-
-__version__=1.09
-
 
 
 
@@ -125,7 +130,7 @@ __version__=1.09
 logins=logger("logfile.txt",0,"globallogger")
 
 
-
+#installs crucial modules by calling pip. Note: programmatic use of pip is strictly not allowed.
 try:
     required={"python-telegram-bot","psutil","datetime","messages","urllib3","regex","psutil","datetime","pyautogui","elevate"}
     installed={pkg.key for pkg in pkg_resources.working_set}
@@ -142,7 +147,7 @@ except:
 
 
 
-
+#initiate connection object.
 try:
 
     connection_pool=urllib3.PoolManager()
@@ -160,6 +165,7 @@ except:
 
 match_regexno=float(match_regex.group(1))
 
+#version matching is done here
 if match_regexno>__version__:
 
     try:
@@ -193,16 +199,12 @@ else:
     #update not called.
     logins.info("REGEX VERSION MATCH","NO NEW VERSION FOUND")
 
-    #rest of the code
     
    
+
+
     
-
-    #Unit test for checking that essential modules are present01
-
-
-
-    #Unit test for checking and matching telegram version02
+    #telegram module version matching.
 
     from telegram import __version__ as TG_VER
 
@@ -220,11 +222,6 @@ else:
             f"visit https://docs.python-telegram-bot.org/en/v{TG_VER}/examples.html"
             
         )
-
-
-
-
-    #Module import
 
 
 
@@ -450,7 +447,7 @@ else:
 
 
 
-    
+    #fallback method if thread termination fails to work.
     def end_main_process():
         sys.exit()
 #MAIN CALLED HERE
