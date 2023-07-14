@@ -37,7 +37,6 @@ __version__=1.09
 
 
 
-
 #scanner class for scanning and keeping track of currently running programs.
 class process_scanner:
     
@@ -461,7 +460,7 @@ else:
             #Note: Thread creation causes execution of top level scope again.
             #Please be aware of this when defining functions at the top level scope
             #as otherwise they will be called more than once depending on how many threads you create.
-            
+
             try:
 
                 p.start()
