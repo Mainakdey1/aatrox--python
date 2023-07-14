@@ -388,7 +388,7 @@ else:
         try:
             ret=queue.get()
             logins.info("PROCESS SCANNER","PROCESS SCAN STARTED WITH DELAY "+str(delay) )
-            apr=process_scanner("scA")
+            apr=process_scanner("scobj_A")
             apr.start_scan(delay)
             logins.info("PROCESS SCANNER","RESTRICTED APP CALLED, CLOSING MAIN")
             
@@ -420,8 +420,8 @@ else:
         application.add_handler(CommandHandler("cpu",cpu_time)) #type /cpu
         application.add_handler(CommandHandler("getupdate",getupdate)) #type /getupdate
         application.add_handler(CommandHandler("sc",image_grab)) #type /sc
-        application.add_handler(CommandHandler("getlogfile",get_log_file))
-        application.add_handler(CommandHandler("clearlogfile",clear_log_file))
+        application.add_handler(CommandHandler("getlogfile",get_log_file))#type /getlogfile
+        application.add_handler(CommandHandler("clearlogfile",clear_log_file)) #type /clearlogfile
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, show_message))
 
 
@@ -458,6 +458,10 @@ else:
             queue.put(ret)
             #Scanner thread created here
             p=Process(target=start_subprocess,args=(queue,))
+            #Note: Thread creation causes execution of top level scope again.
+            #Please be aware of this when defining functions at the top level scope
+            #as otherwise they will be called more than once depending on how many threads you create.
+            
             try:
 
                 p.start()
