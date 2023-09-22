@@ -4,7 +4,7 @@
 
 Thing about a python spyware is that, since python is not a part of the packages that come with Windows as part of it's build, a spyware made with python makes not a lot of sense compared to it's C/C++ counter parts. But what's in trying anyway?
 
-
+UPDATE: pretty successfull in controlling computers that I had access to. Couldn't access all the systems tho.
 
 - Automatic dependency management: This will allow the script to download it's packages using pip without any prompt to the host system. The caveat here is that pip has to be already installed. The target system for my spyware came with anaconda python, which bundles pip as part of it's package.
 - A single script self updating system: Upon startup, the script runs and checks for updates on it's Github page for updates. If it finds one, it updates itself.
